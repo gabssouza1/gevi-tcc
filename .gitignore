@@ -1,0 +1,31 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# AWS CDK
+cdk.out/
+*.js
+!jest.config.js
+node_modules/
+
+# Segredos / ambiente (NUNCA versionar credenciais)
+.env
+.env.*
+*.pem
+aws-credentials*
+**/secrets.*
+
+# Artefatos gerados / temporários
+spec-para-imprimir.html
+build/
+dist/
+*.log
