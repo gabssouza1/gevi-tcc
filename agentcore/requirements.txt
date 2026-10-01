@@ -1,0 +1,7 @@
+# Dependências da imagem de contêiner dos agentes (AgentCore Runtime).
+# A orquestração (agentes.py) e o servidor (servidor.py) usam apenas a stdlib +
+# boto3 (Bedrock/Knowledge Base + AgentCore Memory). O AgentCore Gateway é
+# acionado via HTTP (MCP).
+# boto3>=1.40: inclui os clientes ``bedrock-agentcore`` (data plane da Memory:
+# create_event, list_events, retrieve_memory_records) usados pela memória.
+boto3>=1.40.0

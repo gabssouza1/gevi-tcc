@@ -1,0 +1,4 @@
+# Dependências de runtime do backend (funções Lambda + código compartilhado).
+# Python 3.12
+boto3>=1.34.0
+requests>=2.31.0

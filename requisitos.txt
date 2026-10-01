@@ -1,0 +1,97 @@
+4. LEVANTAMENTO DE REQUISITOS 
+4.1. TÉCNICA DE LEVANTAMENTO UTILIZADA
+Para o levantamento de requisitos do sistema, utilizou-se a técnica de questionário estruturado. Essa abordagem foi escolhida porque possibilitaria a coleta de informações de diversos possíveis usuários de maneira prática e padronizada, permitindo, assim, identificar necessidades, dificuldades e expectativas relacionadas ao mercado financeiro e ao uso de sistemas inteligentes de apoio à decisão.
+	Utilizando o questionário estruturado havia a possibilidade de obter dados quantitativos e qualitativos relevantes para a definição dos requisitos funcionais e não funcionais do sistema, além de ajudar na identificação dos principais atores, funcionalidades esperadas, problemas enfrentados pelos usuários e escopo inicial do protótipo. 
+	Além das perguntas  objetivas, o questionário também contou com os campos abertos para que os participantes pudessem expressar opiniões, sugestões e percepções sobre o sistema proposto. Consequentemente, foi possível compreender tanto aspectos estatísticos quanto comportamentais relacionados à experiência dos usuários com investimentos financeiros. 
+4.2. APLICAÇÃO DO QUESTIONÁRIO 
+	O questionário foi pensado com perguntas que qualificaram o perfil socioeconômico dos participantes, comportamento de investimentos, nível de conhecimento financeiro, dificuldades enfrentadas no mercado financeiro, confiança em tecnologias baseadas em Inteligência Artificial e funcionalidades desejadas em um sistema de apoio à decisão.
+	A pesquisa em questão foi direcionada a possíveis usuários do sistema, buscando identificar fatores que influenciam a tomada de decisão em investimentos e compreender quais recursos seriam mais significantes para aumentar a transparência e a confiabilidade das recomendações financeiras. 
+	Os dados que foram coletados foram organizados em qualitativos que possibilitou interpretar opiniões, expectativas e sugestões apresentadas pelos participantes e quantitativos que permitiu identificar padrões estatísticos relacionados ao perfil e necessidades dos usuários. 
+
+4.3. ANÁLISE QUANTITATIVA DOS REQUISITOS 
+Para compreender melhor as necessidades, dificuldades e expectativas dos usuários em relação a investimentos financeiros, foi realizada uma pesquisa com prováveis usuários do sistema proposto. O levantamento de dados foi realizado por meio de um questionário estruturado, abrangendo perguntas sobre perfil socioeconômico, comportamento de investimentos, nível de conhecimento financeiro, dificuldades enfrentadas, confiança em tecnologias baseadas em Inteligência Artificial e funcionalidades desejadas em um sistema de apoio à decisão. 
+No perfil socioeconômico, a análise do perfil dos respondentes indicou que há uma maioria de indivíduos entre 18 e 24 anos (52,2%), com renda concentrada entre R$2.001 e R$5.000 mensais (47,8%), qualificando um público em sua maioria jovem e em estágio inicial de desenvolvimento financeiro. No âmbito de comportamento de investimentos, foi possível observar que 52,2% dos participantes não investem atualmente, enquanto 47,8% já fizeram algum tipo de investimento, demonstrando a presença de usuários iniciantes e usuários com alguma experiência no mercado.
+De acordo com o conhecimento financeiro, constatou que 64,2% dos respondentes possuem apenas conhecimento básico e 22,4% não possuem nenhum conhecimento sobre investimentos, totalizando 86,6% de usuários com baixo nível de conhecimento acerca do tema. Com este dado, pode-se observar que há uma barreira significativa relacionada à compreensão de conceitos financeiros.
+As dificuldades principais apontadas pelos usuários incluem falta de conhecimento (37,3%), dificuldade em compreender termos financeiros (34,3%), medo de perder dinheiro (34,3%) e incerteza sobre por onde começar (32,8%). Esses resultados clareiam que os usuários enfrentam não apenas limitações técnicas, mas também, há insegurança e falta de orientação  no processo de investimento. 
+A respeito da adoção de tecnologias, 46,3% dos possíveis usuários afirmaram que utilizaram um sistema baseado em Inteligência Artificial para ajudar em investimentos, enquanto 25,4% demonstram uma certa indecisão. Todavia, ao considerar sistemas que apresentam explicações claras sobre suas decisões, a confiança dos usuários aumenta significativamente, alcançando cerca de 91% de aceitação. Esse resultado evidencia que a transparência e explicabilidade são fatores cruciais para a aceitação de sistemas automatizados. 
+Quanto às expectativas em relação ao sistema, destacam-se funcionalidades como sugestões de investimentos e análise de risco (86,6%), explicações simples das decisões (77,6%), acompanhamento do mercado (70,1%) e alertas importantes (67,2%). Além disso, funcionalidades como simulação de investimentos (74,6%), recomendações personalizadas (68,7%) e linguagem adaptativa ao nível de conhecimento do usuário (67,2%) foram consideradas altamente relevantes. 
+De maneira geral, os resultados mostram que os usuários esperam uma solução que combine apoio à decisão, explicações acessíveis, personalização e acompanhamento contínuo do mercado. Dessa forma, os dados alcançados fundamentam o desenvolvimento de um sistema de apoio à decisão baseado em Inteligência Artificial Explicável, capaz de reduzir a complexidade do mercado financeiro e aumentar a confiança do usuário por meio da transparência e adaptação da linguagem.
+4.4. ANÁLISE QUALITATIVA DOS REQUISITOS
+	Além das questões estruturadas, o questionário também incluía campos abertos para que os participantes pudessem expressar sugestões, opiniões e expectativas em relação ao sistema proposto. A análise dessas respostas permitiu que fosse possível identificar percepções mais profundas dos usuários, assim completando os dados quantitativos obtidos anteriormente. 
+	Um dos aspectos observados foi a existência de certa resistência ao uso de sistemas automatizados. Alguns participantes destacaram que tem a preferência a interação humana, indicando que sistemas baseados apenas em chat com Inteligência Artificial podem ser percebidos como limitados e pouco dinâmicos. Esse resultado reforça a necessidade de desenvolver interfaces mais naturais, intuitivas e interativas, além de considerar diferentes formatos de comunicação com o usuário.
+	Também foi destacada a importância da análise de risco e da fundamentação das recomendações apresentadas pelo sistema, garantindo que os usuários valorizam decisões bem justificadas e transparentes. Ademais, surgiram sugestões relacionados à automação de operações financeiras, como funcionalidades de compra e venda automatizada de ativos, demonstrando interesse por recursos mais avançados.
+	Outro aspecto identificado foi a necessidade de transparência nas simulações financeiras, já que alguns participantes destacaram que projeções baseadas em dados históricos podem não representar cenários futuros. Também foram sugeridas funcionalidades como visualização gráfica de tendências, planejamento financeiro e personalização da linguagem conforme o nível de conhecimento do usuário, além da inclusão de conteúdos educacionais complementares. Esses resultados reforçam a importância de desenvolver uma solução acessível, educativa e adaptada às necessidades de diferentes perfis de investidores.
+	Por fim, observou-se a demanda por simplicidade, objetividade e acessibilidade na interface do sistema, bem como por ferramentas que auxiliem na definição de estratégias de investimento de curto, médio e longo prazo. Esses aspectos reforçam a necessidade de desenvolver uma solução que seja não apenas funcional, mas também clara, transparente e adaptada ao perfil de diferentes usuários.
+4.5. REQUISITOS FUNCIONAIS DO SISTEMA
+De acordo com os dados coletados durante a etapa de levantamento de requisitos, foram definidos os principais requisitos funcionais do sistema. Esses requisitos representam as funcionalidades que deverão ser implementadas para atender às necessidades identificadas nos usuários participantes da pesquisa.
+Tabela 1 - Requisitos funcionais
+ID
+REQUISITO
+DESCRIÇÃO
+RF01
+Recomendações de investimento
+O sistema deve fornecer sugestões de investimentos personalizadas ao perfil do usuário
+RF02
+Análise de risco
+O sistema deve apresentar análise de risco para cada recomendação
+RF03
+Explicação adaptativa e educativa das recomendações
+O sistema deve justificar as recomendações de investimento de forma clara, adaptando o nível de linguagem ao perfil do usuário e fornecendo conteúdos educativos complementares quando necessário.
+RF04
+Simulação de investimentos
+O sistema deve permitir simular cenários antes da decisão
+RF05
+Dashboard econômico
+O sistema deve exibir indicadores como Selic, IPCA, dólar e CDI
+RF06
+Monitoramento e alerta de mercado
+O sistema deve permitir o acompanhamento de indicadores macroeconômicos e ativos relevantes, notificando o usuário em casos de variações significativas (ex.: aumento da taxa Selic, alta volatilidade do dólar ou quedas relevantes em ativos).
+RF07
+Análise de portfólio
+O sistema deve analisar os investimentos informados pelo usuário e fornecer feedback.
+RF08
+Interação com agente inteligente
+O sistema deve permitir que o usuário interaja com agentes inteligentes responsáveis por responder dúvidas e fornecer suporte às recomendações financeiras.
+RF09
+Autenticação de usuário
+O sistema deve permitir que o usuário realize login para acessar seu perfil, histórico de interações e informações previamente cadastradas.
+RF10
+Cadastro de usuários 
+O sistema deve permitir que o usuário realize seu cadastro.
+
+Fonte: Elaborado pelos autores (2026)
+Os requisitos funcionais apresentados estão relacionados às principais necessidades identificadas durante a pesquisa, especialmente em relação à transparência das recomendações, análise de risco, personalização da experiência e acompanhamento do mercado financeiro. 
+4.6. REQUISITOS NÃO FUNCIONAIS 
+	Além das funcionalidades principais, também foram definidos requisitos não funcionais relacionados à qualidade, desempenho, segurança e transparência do sistema.
+Tabela 2 - Requisitos não funcionais
+ID 
+REQUISITO
+DESCRIÇÃO
+RNF01
+
+
+Desempenho
+O sistema deve responder às solicitações do usuário em tempo adequado, garantindo fluidez na interação.
+RNF02
+Confiabilidade
+O sistema deve fornecer informações consistentes e baseadas em dados confiáveis.
+RNF03
+
+
+Manutenibilidade
+O sistema deve possuir estrutura modular, permitindo manutenção e evolução futura.
+RNF04
+Segurança
+O sistema deve proteger os dados pessoais e financeiros dos usuários.
+RNF05
+Escalabilidade
+O sistema deve permitir a inclusão de novos agentes inteligentes futuramente.
+RNF06
+Transparência 
+O sistema deve apresentar explicações claras para as recomendações geradas.
+RNF07
+Disponibilidade
+O sistema deve manter acesso contínuo às informações financeiras sempre que possível.
+
+Fonte: Elaborado pelos autores (2026)
+Os requisitos não funcionais possuem papel fundamental na experiência do usuário, garantindo que o sistema seja acessível, compreensível, confiável e adequado aos diferentes perfis de investidores.

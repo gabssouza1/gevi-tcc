@@ -1,0 +1,18 @@
+# Dependências do app CDK (infraestrutura como código).
+# Separadas do requirements de runtime das Lambdas (../requirements.txt).
+# Python 3.12+. Use faixas padrão do CDK v2 (não fixe versões inexistentes).
+#
+# Piso 2.267.0 (tarefa 9.2): expõe o módulo ``aws_cdk.aws_bedrockagentcore``
+# (família ``AWS::BedrockAgentCore::*``) usado pela AgentsStack para provisionar
+# o Gateway (authorizer JWT do Cognito + GatewayTargets), a Memory, a
+# WorkloadIdentity e o Runtime/RuntimeEndpoint do Amazon Bedrock AgentCore. A
+# verificação da tarefa 9.1 (ver infra/AGENTCORE_IAC.md) confirmou o suporte de
+# IaC; esta versão foi validada como a que expõe os constructs L2 do AgentCore.
+#
+# Este piso também cobre, com folga: (a) o recurso L1
+# ``aws_opensearchserverless.CfnIndex`` (>=2.177.0, tarefa 8.2), usado pela
+# KnowledgeBaseStack para criar o índice vetorial ANTES do Bedrock Knowledge
+# Base; e (b) o suporte a OAC de ``S3BucketOrigin.with_origin_access_control``
+# (>=2.161.0), usado pela FrontendStack (tarefa 2.4).
+aws-cdk-lib>=2.267.0,<3.0.0
+constructs>=10.0.0,<11.0.0

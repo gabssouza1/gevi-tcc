@@ -1,0 +1,7 @@
+# Dependências de desenvolvimento e testes.
+# Inclui as dependências de runtime além das ferramentas de teste.
+-r requirements.txt
+
+pytest>=8.0.0
+hypothesis>=6.100.0
+moto[dynamodb,s3]>=5.0.0

@@ -1,0 +1,49 @@
+[project]
+name = "multiagent-investment-advisor"
+version = "0.1.0"
+description = "Backend serverless do sistema multiagente de apoio à decisão em investimentos (XAI)."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+
+# Dependências de runtime usadas pelas funções Lambda e pelo código compartilhado.
+dependencies = [
+    "boto3>=1.34.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+# Dependências de desenvolvimento e testes (pytest, property-based e mocks AWS).
+dev = [
+    "pytest>=8.0.0",
+    "hypothesis>=6.100.0",
+    "moto[dynamodb,s3]>=5.0.0",
+    "boto3>=1.34.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# O pacote de código comum reutilizado pelas Lambdas.
+packages = ["shared"]
+
+[tool.pytest.ini_options]
+# Descoberta de testes a partir da pasta tests/.
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra --strict-markers"
+# Marcadores personalizados usados para classificar os testes.
+markers = [
+    "unit: teste unitário de casos específicos e de borda",
+    "property: teste property-based (Hypothesis) de uma Propriedade de Corretude",
+    "aws: teste que usa serviços AWS simulados (moto)",
+    "smoke: teste de fumaça que valida se a suíte roda",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]

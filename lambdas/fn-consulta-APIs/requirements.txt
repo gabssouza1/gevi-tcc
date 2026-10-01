@@ -1,0 +1,3 @@
+# Dependências específicas empacotadas com esta Lambda.
+# boto3 já está disponível no runtime da AWS Lambda; requests precisa ser empacotado.
+requests>=2.31.0
