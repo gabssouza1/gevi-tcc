@@ -300,9 +300,11 @@ O DynamoDB e o Memory não são redundantes: o DynamoDB serve a interface do usu
 
 Uma observação importante sobre o uso do Memory, descoberta durante o desenvolvimento, é que a memória de longo prazo pode ficar desatualizada em relação ao estado real do usuário. Para dados que exigem precisão em tempo real, como a composição da carteira, a solução foi forçar a consulta à tool correspondente, utilizando o parâmetro `toolChoice` da Converse API (descrito na seção 4.5.2). O Memory passou a ser tratado como fonte de contexto, não como fonte autoritativa de fatos sensíveis.
 
-## 4.8 Segurança da aplicação
+## 4.8 Segurança, Observabilidade e Governança
 
-A segurança do GEVI é implementada em camadas, com cada mecanismo cobrindo uma superfície diferente de ataque. Esta seção descreve apenas os controles efetivamente provisionados pelo CDK no ambiente de desenvolvimento, não cobrindo elementos que permaneceram em planejamento.
+Esta seção reúne as três camadas transversais do sistema. A segurança é implementada em profundidade, com cada mecanismo cobrindo uma superfície distinta de ataque. A observabilidade dá visibilidade do comportamento em execução por meio de métricas, logs e tracing distribuído. A governança registra o uso dos recursos da conta AWS e organiza o provisionamento da infraestrutura como código.
+
+Todos os controles descritos a seguir são aqueles efetivamente provisionados pelo CDK no ambiente de desenvolvimento. Elementos que permaneceram apenas no projeto conceitual são indicados explicitamente como trabalhos futuros, não como parte da versão entregue.
 
 ### 4.8.1 Autenticação
 
@@ -336,7 +338,33 @@ A proteção da aplicação na camada 7 é feita pelo **AWS WAF**. Uma Web ACL d
 
 Métricas da Web ACL são publicadas no Amazon CloudWatch com amostragem de requisições, o que permite inspecionar na própria console AWS quais regras disparam ao longo do tempo e qual proporção do tráfego seria bloqueada se o modo de uma regra fosse alterado de "count" para "block". Essa observabilidade é importante durante o ajuste fino das regras gerenciadas, cujos padrões conservadores da AWS podem gerar falsos positivos em uma aplicação específica.
 
-Os controles descritos nesta seção são aqueles efetivamente implementados no CDK e provisionados no ambiente. Documentos de projeto anteriores listavam componentes adicionais (como CloudTrail e integração com AWS Security Hub) como parte da arquitetura planejada; a seção 4.9 e a conclusão do trabalho discutem o que ficou dentro e fora do escopo da versão entregue.
+### 4.8.5 Observabilidade
+
+A observabilidade do GEVI é construída sobre três sinais complementares: métricas, logs e tracing distribuído. O ponto de concentração desses sinais é o **Amazon CloudWatch**, provisionado por uma stack dedicada do CDK (`ObservabilityStack`).
+
+**Métricas e alarmes.** A stack cria alarmes de erro e throttling para cada uma das sete Lambdas da aplicação, com janela de avaliação de cinco minutos e limiar de uma ocorrência. Alarmes equivalentes cobrem as tabelas DynamoDB (erros de sistema e requisições sob throttling nas operações efetivamente utilizadas pelo sistema) e o Runtime do AgentCore (erros totais e throttling). O tratamento de dados ausentes é configurado como `NOT_BREACHING`, o que evita falsos positivos quando uma Lambda específica não é invocada em uma janela, mas mantém a sensibilidade quando ela é invocada e falha.
+
+**Dashboard de saúde do sistema.** Um dashboard do CloudWatch consolida a visão operacional em quatro grupos de widgets: invocações e erros das Lambdas, latência p99 com anotação de limite (10 segundos), throttling por Lambda, erros e throttling por tabela DynamoDB, tempo de execução das tools no AgentCore Gateway e latência e erros do Runtime. Essa consolidação em uma única tela foi importante durante as fases de otimização da arquitetura descritas na seção 4.9, pois permitiu identificar visualmente qual etapa do pipeline estava consumindo mais tempo em cada ciclo.
+
+**Logs estruturados.** Todas as Lambdas são configuradas com `logging_format = JSON`, de forma que cada entrada de log é um documento JSON com os campos padronizados do AWS Lambda e campos específicos adicionados pelo código da aplicação. Esse formato viabiliza consultas estruturadas no CloudWatch Logs Insights, por exemplo para filtrar invocações por `user_id`, por tipo de ferramenta chamada ou por `stopReason` retornado pelo modelo.
+
+**Tracing distribuído com AWS X-Ray.** As roles IAM das Lambdas incluem as permissões `xray:PutTelemetryRecords` e `xray:PutTraceSegments`, habilitando o envio de segmentos de rastreamento ao serviço. Como a requisição do GEVI percorre múltiplos componentes (API Gateway, Lambda proxy, AgentCore Runtime, Lambdas de ferramentas, DynamoDB), o rastreamento distribuído permite correlacionar o impacto de cada etapa no tempo total da requisição em uma única visualização de trace.
+
+A instrumentação do servidor do AgentCore (`agentcore/servidor.py`) complementa esses sinais com logs específicos de duração por chamada ao modelo e ao Knowledge Base, com o modelo utilizado e o `stopReason`. Foi essa instrumentação ad hoc, somada aos sinais do CloudWatch, que viabilizou o diagnóstico detalhado dos gargalos de latência discutido na seção 4.9.
+
+### 4.8.6 Governança e auditoria
+
+A camada de governança do GEVI cobre três objetivos: registrar todas as operações realizadas na conta AWS, isolar os registros de auditoria em um repositório protegido e organizar o provisionamento da infraestrutura por meio de código versionado.
+
+**Trilha de auditoria com AWS CloudTrail.** Uma trilha multi-region é provisionada na `DataStack` (`maia-<ambiente>-trail`), com captura de eventos de gerenciamento em modo `ReadWriteType.ALL` e inclusão de eventos globais de serviços. Além dos eventos de gerenciamento, a trilha captura eventos de dados do bucket de investimentos, o que permite auditar operações sobre os datasets e documentos da Knowledge Base. O bucket de destino (o `audit-bucket`) é deliberadamente excluído do próprio escopo de auditoria para não registrar as escritas feitas pelo CloudTrail, evitando um laço de logs.
+
+**Bucket de auditoria protegido.** O `audit-bucket` é um bucket S3 privado, com acesso público bloqueado, versionamento ativado, criptografia em repouso pela mesma chave CMK do KMS utilizada pelas tabelas DynamoDB e HTTPS obrigatório (política `enforce-SSL`). A entrega de logs criptografados por CMK a partir do serviço CloudTrail exige autorizações específicas na política da chave, implementadas por meio de duas instruções restritas ao principal `cloudtrail.amazonaws.com`, com condição que vincula a autorização ao contexto de criptografia de um trail da própria conta. Esse detalhe garante que o principal de serviço não possa usar a chave fora do fluxo esperado.
+
+**Separação entre dados e auditoria.** O desenho mantém três buckets S3 com responsabilidades distintas: o bucket de aplicação (frontend estático, datasets e documentos da KB), o bucket de auditoria (destino do CloudTrail) e os buckets temporários de deploy criados pelo CDK. Essa separação evita que uma falha de permissão em um bucket operacional comprometa os registros de auditoria.
+
+**Infraestrutura como código.** Toda a infraestrutura do GEVI é definida em Python com o AWS Cloud Development Kit (CDK), organizada em oito stacks com responsabilidades bem delimitadas: `SecurityStack` (KMS e Cognito), `DataStack` (buckets, DynamoDB, EventBridge e CloudTrail), `ComputeStack` (Lambdas de dados), `AgentsStack` (AgentCore Runtime, Gateway e Memory), `ApiStack` (API Gateway e Lambda proxy), `FrontendStack` (CloudFront, OAC e WAF), `KnowledgeBaseStack` (Knowledge Base e OpenSearch Serverless) e `ObservabilityStack` (alarmes e dashboard). As dependências entre stacks são lineares e explícitas, sem ciclos. Essa abordagem traz três benefícios de governança: o estado da infraestrutura é versionado junto do código da aplicação, qualquer alteração passa por revisão de pares no fluxo normal de desenvolvimento e o ambiente é reproduzível em uma conta nova por meio da sequência de `cdk deploy`.
+
+A combinação dessas três camadas (segurança, observabilidade e governança) atende aos requisitos não funcionais de confiabilidade (RNF02), segurança (RNF04), manutenibilidade (RNF03) e disponibilidade (RNF07) estabelecidos no Capítulo 3.
 
 ## 4.9 Evolução e otimização da arquitetura
 
